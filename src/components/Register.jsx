@@ -53,7 +53,7 @@ const Register = () => {
 
                 </div>
                 <div className='relative'>
-                   <p onClick={()=>setShowPassword(!showPassword)}  className=' absolute hover:cursor-pointer left-95 z-40 top-3 '>{showPassword?<FaEye /> :<FaEyeSlash />}</p>
+                   <p onClick={()=>setShowPassword(!showPassword)}  className=' absolute hover:cursor-pointer left-95 z-40 top-3 '>{showPassword?<FaEyeSlash />:<FaEye />}</p>
               <label className="input validator">
                         <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <g
