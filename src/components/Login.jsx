@@ -1,12 +1,13 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase.init";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Login = () => {
     const [success,setsuccess]=useState(false)
     const [loginerrors,setloginerrors]=useState('')
-  const handelLogin=(e)=>{
+    const emailref=useRef();
+    const handelLogin=(e)=>{
     e.preventDefault()
     const email=e.target.email.value
     const password=e.target.password.value
@@ -34,6 +35,8 @@ const Login = () => {
   }
   //forgate password
   const handelForgatePassword=()=>{
+    console.log('Get me email email address',emailref.current.value)
+    const email=emailref.current.value
     
   }
     return (
@@ -47,7 +50,7 @@ const Login = () => {
       <div className="card-body">
         <fieldset className="fieldset">
           <label className="label">Email</label>
-          <input type="email" name="email" className="input" placeholder="Email" />
+          <input type="email" ref={emailref} name="email" className="input" placeholder="Email" />
           <label className="label">Password</label>
           <input type="password" name="password" className="input" placeholder="Password" />
           <div><a onClick={handelForgatePassword} className="link link-hover">Forgot password?</a></div>
