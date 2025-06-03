@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { auth } from '../firebase.init';
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 const Register = () => {
     const [errors, seterrors] = useState('');
     const [success, setsuccess] = useState(false)
@@ -35,9 +36,9 @@ const Register = () => {
     }
     return (
         <div>
-            <div className="text-center max-w-lg mx-auto my-20">
+            <div className="text-center  py-10 rounded-2xl shadow-2xl max-w-lg mx-auto my-20">
                 <h1 className="my-10 text-3xl font-bold ">Register</h1>
-                <form onSubmit={handleRegister} className="grid gap-3">
+                <form onSubmit={handleRegister} className="grid gap-3 mb-5">
 
                     <div>
                         <label className="input validator">
@@ -111,6 +112,7 @@ const Register = () => {
                 {
                     success && <p className='text-green-500'>Register Successfull</p>
                 }
+               <p>Alrady have an acount to this website please <Link to='/login' className=" text-blue-600 hover:underline">Log-In</Link></p>
             </div>
 
         </div>

@@ -1,6 +1,7 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase.init";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Login = () => {
     const [success,setsuccess]=useState(false)
@@ -46,12 +47,14 @@ const Login = () => {
       </div>
     </div>
    </form>
+  
    {
      success && <p className="text-green-400">User Login Successfull</p>
    }
    {
     loginerrors && <p className="text-red-500">{loginerrors}</p>
    }
+   <p>New to this website please <Link to='/register' className="text-blue-600 hover:underline">Sign up</Link></p>
   </div>
 </div>
     );
