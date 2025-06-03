@@ -1,4 +1,4 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase.init";
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
@@ -37,7 +37,15 @@ const Login = () => {
   const handelForgatePassword=()=>{
     console.log('Get me email email address',emailref.current.value)
     const email=emailref.current.value
-    
+    if(!email){
+        console.log("Plase Provide a Valid Email address")
+    }
+    else{
+        sendPasswordResetEmail(auth,email)
+        .then(()=>{
+            alert('Reset email sent,Plase check your email')
+        })
+    }
   }
     return (
        <div className="hero  min-h-screen">
