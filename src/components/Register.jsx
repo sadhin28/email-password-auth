@@ -2,10 +2,12 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
 import { auth } from '../firebase.init';
 import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
 const Register = () => {
     const [errors,seterrors]=useState('');
     const [success,setsuccess]=useState(false)
     const [showPassword,setShowPassword]=useState(false)
+    console.log(showPassword)
     const handleRegister=(event)=>{
         event.preventDefault()
         const email = (event.target.email.value)
@@ -51,9 +53,8 @@ const Register = () => {
 
                 </div>
                 <div className='relative'>
-                    <button  className='btn btn-xs absolute left-95 z-40 top-2 '><FaEye />
-</button>
-                    <label className="input validator">
+                   <p onClick={()=>setShowPassword(!showPassword)}  className=' absolute hover:cursor-pointer left-95 z-40 top-3 '>{showPassword?<FaEye /> :<FaEyeSlash />}</p>
+              <label className="input validator">
                         <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <g
                                 strokeLinejoin="round"
@@ -69,8 +70,8 @@ const Register = () => {
                             </g>
                         </svg>
                         <input
-                            name={showPassword?'text':'password'}
-                            type="password"
+                            name="password"
+                            type={showPassword?'text':'password'}
                             required
                             placeholder="Password"
                             minlength="8"
@@ -88,6 +89,9 @@ const Register = () => {
                     <button className="btn w-80 bg-amber-400">Register Now</button>
                 </div>
             </form>
+            
+            
+
             {
                 errors && <p>{errors}</p>
             }
@@ -95,6 +99,7 @@ const Register = () => {
                 success && <p className='text-green-500'>Register Successfull</p>
             }
         </div>
+         
         </div>
     );
 };
