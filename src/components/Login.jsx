@@ -19,7 +19,12 @@ const Login = () => {
     signInWithEmailAndPassword(auth,email,password)
     .then(res=>{
         console.log(res.user)
-        setsuccess(true)
+        
+        if(!res.user.emailVerified){
+            setloginerrors("Plase varify Your Email Address")
+        }else{
+            setsuccess(true)
+        }
     })
     .catch(error=>{
         console.log(Error,error.message)
@@ -49,7 +54,8 @@ const Login = () => {
    </form>
   
    {
-     success && <p className="text-green-400">User Login Successfull</p>
+      
+        success  &&  <p className="text-green-400">User Login Successfull</p>
    }
    {
     loginerrors && <p className="text-red-500">{loginerrors}</p>
