@@ -3,8 +3,8 @@ import React from 'react';
 const Register = () => {
     const handleRegister=(event)=>{
         event.preventDefault()
-        console.log(event.target.email.value)
-        console.log(event.target.password.value)
+        const email = (event.target.email.value)
+        const password = (event.target.password.value)
     }
     return (
         <div>
