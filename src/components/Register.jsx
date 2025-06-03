@@ -1,19 +1,28 @@
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import React from 'react';
+import React, { useState } from 'react';
 import { auth } from '../firebase.init';
-
+import { FaEye } from "react-icons/fa";
 const Register = () => {
+    const [errors,seterrors]=useState('');
+    const [success,setsuccess]=useState(false)
+    const [showPassword,setShowPassword]=useState(false)
     const handleRegister=(event)=>{
         event.preventDefault()
         const email = (event.target.email.value)
         const password = (event.target.password.value)
+        
+        //reset error status
+        seterrors('');
+        setsuccess('')
         //create user with email and password
         createUserWithEmailAndPassword(auth,email,password)
         .then(res=>{
           console.log(res.user)
+          setsuccess(true);
         })
         .catch(error=>{
-            console.log(error)
+            seterrors(error.message)
+            setsuccess(false);
         })
     }
     return (
@@ -41,7 +50,9 @@ const Register = () => {
                     <div className="validator-hint hidden">Enter valid email address</div>
 
                 </div>
-                <div>
+                <div className='relative'>
+                    <button  className='btn btn-xs absolute left-95 z-40 top-2 '><FaEye />
+</button>
                     <label className="input validator">
                         <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <g
@@ -58,7 +69,7 @@ const Register = () => {
                             </g>
                         </svg>
                         <input
-                            name='password'
+                            name={showPassword?'text':'password'}
                             type="password"
                             required
                             placeholder="Password"
@@ -67,6 +78,7 @@ const Register = () => {
                             title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
                         />
                     </label>
+                    
                     <p className="validator-hint hidden">
                         Must be more than 8 characters, including
                         <br />At least one number <br />At least one lowercase letter <br />At least one uppercase letter
@@ -76,6 +88,12 @@ const Register = () => {
                     <button className="btn w-80 bg-amber-400">Register Now</button>
                 </div>
             </form>
+            {
+                errors && <p>{errors}</p>
+            }
+            {
+                success && <p className='text-green-500'>Register Successfull</p>
+            }
         </div>
         </div>
     );
