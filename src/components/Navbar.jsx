@@ -50,7 +50,9 @@ const Navbar = () => {
     user ? 
     <>
       
-        <span>{user?.email}</span>
+        <img className='w-10 h-10 rounded-full ' src={user?.photoURL} alt="" />
+        
+        <span>{user?.displayName}</span>
         <a onClick={handelSignOut} className='btn'>Sign out</a>
       
     </>
