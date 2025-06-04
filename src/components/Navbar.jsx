@@ -15,6 +15,9 @@ const Navbar = () => {
       {
         user &&  <li><NavLink to='order'>Order</NavLink></li>
       }
+      {
+        user &&  <li><NavLink to='profile'>Profile</NavLink></li>
+      }
     </>
 
     const handelSignOut=()=>{
