@@ -15,7 +15,7 @@ const AuthProvider = ({children}) => {
    }
    //set observer
    useEffect(()=>{
-     onAuthStateChanged(auth,currentUser=>{
+    const unsubscribe = onAuthStateChanged(auth,currentUser=>{
     if(currentUser){
         console.log('current user',currentUser)
         setUser(currentUser)
@@ -24,6 +24,11 @@ const AuthProvider = ({children}) => {
         setUser(null)
     }
    })
+
+   return()=>{
+        unsubscribe()
+   }
+
    },[])
     const authinfo={
         createUser,
