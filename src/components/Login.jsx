@@ -1,9 +1,11 @@
 import { sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase.init";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../provider/AuthProvider";
 
 const Login = () => {
+    const {logingUser}=useContext(AuthContext)
     const [success,setsuccess]=useState(false)
     const [loginerrors,setloginerrors]=useState('')
     const emailref=useRef();
@@ -17,15 +19,10 @@ const Login = () => {
     setloginerrors('')
     //login user
 
-    signInWithEmailAndPassword(auth,email,password)
+    logingUser(email,password)
     .then(res=>{
         console.log(res.user)
-        
-        if(!res.user.emailVerified){
-            setloginerrors("Plase varify Your Email Address")
-        }else{
-            setsuccess(true)
-        }
+        setsuccess('Loging Successfull')
     })
     .catch(error=>{
         console.log(Error,error.message)
