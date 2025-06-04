@@ -1,9 +1,10 @@
 import { useContext } from "react";
 import { AuthContext } from "../provider/AuthProvider";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const PrivateRoute = ({children}) => {
     const {user,loading}=useContext(AuthContext)
+    const navigate=useNavigate()
     if(loading){
         return <div className="grid relative top-40 justify-center">
             <span className="loading  loading-infinity loading-xl"></span>
@@ -14,7 +15,7 @@ const PrivateRoute = ({children}) => {
         return children;
     }
     return (
-        <Navigate to="/login"></Navigate>
+        navigate('/login')
     );
 };
 
