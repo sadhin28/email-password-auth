@@ -12,6 +12,9 @@ const Navbar = () => {
       <li><NavLink to='/'>Home</NavLink></li>
       <li><NavLink to='login'>LogIn</NavLink></li>
       <li><NavLink to='register'>Register</NavLink></li>
+      {
+        user &&  <li><NavLink to='order'>Order</NavLink></li>
+      }
     </>
 
     const handelSignOut=()=>{
@@ -53,10 +56,10 @@ const Navbar = () => {
         <img className='w-10 h-10 rounded-full ' src={user?.photoURL} alt="" />
         
         <span>{user?.displayName}</span>
-        <a onClick={handelSignOut} className='btn'>Sign out</a>
+        <a onClick={handelSignOut} className='btn btn-sm'>Sign out</a>
       
     </>
-    :<Link className='btn' to='/login'>Log in</Link>
+    :<Link className='btn btn-sm' to='/login'>Log in</Link>
   }
     
   </div>
