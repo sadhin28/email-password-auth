@@ -38,7 +38,7 @@ const Register = () => {
                     }
                     )
 
-                //update user
+                //update user  
                 const profile={
                     displayName:name,
                     photoURL:photo
