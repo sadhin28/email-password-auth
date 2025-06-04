@@ -5,12 +5,15 @@ export const AuthContext = createContext(null)
   
 const AuthProvider = ({children}) => {
     const [user,setUser]=useState(null)
+    const [loading,setloading]=useState(true)
     //create user 
    const createUser = (email,password,name,photo)=>{
+    setloading(false);
     return createUserWithEmailAndPassword(auth,email,password,name,photo)
    }
    //login user
    const logingUser=(email,password)=>{
+    setloading(false)
     return signInWithEmailAndPassword(auth,email,password)
    }
    //set observer
@@ -19,6 +22,7 @@ const AuthProvider = ({children}) => {
     if(currentUser){
         console.log('current user',currentUser)
         setUser(currentUser)
+        setloading(false);
     }else{
         console.log('No user login')
         setUser(null)
@@ -32,9 +36,11 @@ const AuthProvider = ({children}) => {
    },[])
    //logout user
    const logoutUser=()=>{
+    setloading(true)
      return signOut(auth);
    }
     const authinfo={
+        loading,
         createUser,
         logoutUser,
         logingUser,
