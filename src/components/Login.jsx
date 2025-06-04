@@ -1,14 +1,16 @@
 import { sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase.init";
 import { useContext, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 
 const Login = () => {
+  const navigate=useNavigate()
     const {logingUser}=useContext(AuthContext)
     const [success,setsuccess]=useState(false)
     const [loginerrors,setloginerrors]=useState('')
     const emailref=useRef();
+    
     const handelLogin=(e)=>{
     e.preventDefault()
     const email=e.target.email.value
@@ -23,7 +25,9 @@ const Login = () => {
     .then(res=>{
         console.log(res.user)
         setsuccess('Loging Successfull')
-    })
+        e.target.reset();
+        navigate('/')
+      })
     .catch(error=>{
         console.log(Error,error.message)
         setloginerrors(error.message)

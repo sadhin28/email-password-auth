@@ -4,10 +4,11 @@ import { FaEyeSlash } from "react-icons/fa";
 import { AuthContext } from "../provider/AuthProvider";
 import { updateProfile } from "firebase/auth";
 import { auth } from "../firebase.init";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const SignIn = () => {
       const [showPassword, setShowPassword] = useState(false)
       const {createUser}=useContext(AuthContext)
+      const navigate=useNavigate()
       const handleRegister=(event)=>{
         event.preventDefault()
          const email = (event.target.email.value)
@@ -19,6 +20,8 @@ const SignIn = () => {
         createUser(email,password,name,photo)
         .then(res=>{
             console.log(res.user)
+            event.target.reset();
+            navigate('/home')
 
             //updateuser
             const profile={
