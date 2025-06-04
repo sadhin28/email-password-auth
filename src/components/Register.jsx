@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, sendEmailVerification,  } from 'firebase/auth';
+import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile, } from 'firebase/auth';
 import React, { useState } from 'react';
 import { auth } from '../firebase.init';
 import { FaEye } from "react-icons/fa";
@@ -13,28 +13,43 @@ const Register = () => {
         event.preventDefault()
         const email = (event.target.email.value)
         const password = (event.target.password.value)
-        const terms= (event.target.term.checked)
-       
+        const name=event.target.name.value
+        const photo=event.target.photo.value
+        const terms = (event.target.term.checked)
+        console.log(name,photo)
         //reset error status
         seterrors('');
         setsuccess('')
 
-        if(!terms){
-           seterrors('Place Accept Our Terms & Condition')
-           return;
+        if (!terms) {
+            seterrors('Place Accept Our Terms & Condition')
+            return;
         }
         //create user with email and password
-        createUserWithEmailAndPassword(auth, email, password)
+        createUserWithEmailAndPassword(auth, email, password,name,photo)
             .then(res => {
                 console.log(res.user)
                 setsuccess(true);
 
                 //send varification email address
                 sendEmailVerification(auth.currentUser)
-                .then(()=>{
-                    console.log('Varificatin email')
+                    .then(() => {
+                        console.log('Varificatin email')
+                    }
+                    )
+
+                //update user
+                const profile={
+                    displayName:name,
+                    photoURL:photo
                 }
-                )
+                updateProfile(auth.currentUser,profile)
+                .then(res=>{
+                    console.log('user Profile Update')
+                })
+                .catch(error=>{
+                    console.log('User profile Update error')
+                })
             })
             .catch(error => {
                 seterrors(error.message)
@@ -46,7 +61,43 @@ const Register = () => {
             <div className="text-center  py-10 rounded-2xl shadow-2xl max-w-lg mx-auto my-20">
                 <h1 className="my-10 text-3xl font-bold ">Register</h1>
                 <form onSubmit={handleRegister} className="grid gap-3 mb-5">
-
+                    <div>
+                        <label className="input validator">
+                            <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <g
+                                    strokeLinejoin="round"
+                                    strokeLinecap="round"
+                                    strokeWidth="2.5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                >
+                                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </g>
+                            </svg>
+                            <input
+                                type="text"
+                                required
+                                name='name'
+                                placeholder="Username"
+                                
+                            />
+                        </label>
+                        
+                    </div>
+                    <div>
+                        <label className="input validator">
+                            <input
+                                type="text"
+                                required
+                                name='photo'
+                                placeholder="Photo Url"
+                                
+                            />
+                        </label>
+                        
+                    </div>
+                    
                     <div>
                         <label className="input validator">
                             <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -102,7 +153,7 @@ const Register = () => {
                     <div>
                         <label className="label">
                             <input name='term'
-                             type="checkbox" defaultChecked className="checkbox" />
+                                type="checkbox" defaultChecked className="checkbox" />
                             Accept Our Terms & Condition
                         </label>
                     </div>
@@ -119,7 +170,7 @@ const Register = () => {
                 {
                     success && <p className='text-green-500'>Register Successfull</p>
                 }
-               <p>Alrady have an acount to this website please <Link to='/login' className=" text-blue-600 hover:underline">Log-In</Link></p>
+                <p>Alrady have an acount to this website please <Link to='/login' className=" text-blue-600 hover:underline">Log-In</Link></p>
             </div>
 
         </div>
